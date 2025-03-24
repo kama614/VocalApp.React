@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getVocabs } from "../api/vocabApi";
 import VocabListTable from "../components/VocabListTable";
+import VocabRegistrationForm from "../components/VocabRegistrationForm";
 
 /*
 単語リストページ
@@ -29,7 +30,7 @@ export default function HomePage() {
   }
   return (
     <div>
-      {/*単語登録フォームの配置*/}
+      <VocabRegistrationForm />
       {/*絞り込みメニューの配置*/}
       {vocabData}
     </div>
