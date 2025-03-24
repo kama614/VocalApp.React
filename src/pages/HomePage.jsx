@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getVocabs } from "../api/vocabApi";
+import { getVocabs, getVocabsByType } from "../api/vocabApi";
 import VocabListTable from "../components/VocabListTable";
 import VocabRegistrationForm from "../components/VocabRegistrationForm";
+import { useAtomValue } from "jotai";
+import { currentVocabTypeAtom } from "../atoms/currentVocabTypeAtom";
+import VocabFilter from "../components/VocabFilter";
 
 /*
 単語リストページ
@@ -10,9 +13,18 @@ import VocabRegistrationForm from "../components/VocabRegistrationForm";
 */
 
 export default function HomePage() {
+  // 単語の絞り込み条件
+  const currentTypeId = useAtomValue(currentVocabTypeAtom);
+
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["vocabs"],
-    queryFn: getVocabs
+    queryKey: ["vocabs", currentTypeId],
+    queryFn: () => {
+      if (currentTypeId === 0) {
+        return getVocabs();
+      } else {
+        return getVocabsByType(currentTypeId);
+      }
+    }
   });
 
   // 単語リストテーブル
@@ -31,7 +43,7 @@ export default function HomePage() {
   return (
     <div>
       <VocabRegistrationForm />
-      {/*絞り込みメニューの配置*/}
+      <VocabFilter additionalClassName="mt-3 mb-4" />
       {vocabData}
     </div>
   );
