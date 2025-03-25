@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getVocabById } from "../api/vocabApi";
 import VocabDetailsTable from "../components/VocabDetailsTable";
+import VocabEditForm from "../components/VocabEditForm";
 
 /*
 詳細ページ
@@ -44,7 +45,7 @@ export default function DetailsPage() {
   return (
     <>
       {isEditMode ? (
-        <p>編集モード用コンポーネントを表示</p>
+        <VocabEditForm vocab={vocab} setIsEditMode={setIsEditMode} />
       ) : (
         <VocabDetailsTable vocab={vocab} setIsEditMode={setIsEditMode} />
       )}
