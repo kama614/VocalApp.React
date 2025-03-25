@@ -3,8 +3,10 @@
 プロップス: 単語、編集モード更新関数
 */
 
+import { useRef, useState } from "react";
 import useCreateEditMutation from "../hooks/useCreateEditMutation";
 import VocabTypeSelector from "./VocabTypeSelector";
+import useVocabFormInputs from "./../hooks/useVocabFormInput";
 
 export default function VocabEditForm({
   vocab: { id, word, meaning, vocabType, registeredAt, updatedAt },
