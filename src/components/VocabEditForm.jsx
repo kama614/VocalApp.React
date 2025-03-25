@@ -4,6 +4,7 @@
 */
 
 import useCreateEditMutation from "../hooks/useCreateEditMutation";
+import VocabTypeSelector from "./VocabTypeSelector";
 
 export default function VocabEditForm({
   vocab: { id, word, meaning, vocabType, registeredAt, updatedAt },
@@ -44,4 +45,61 @@ export default function VocabEditForm({
   };
 
   // 削除ボタン
+  const handleDelete = () => {
+    deleteMutation.mutate();
+  };
+
+  return (
+    <div>
+      {showValidationError ? (
+        <div className="alert alert-warning">入力に不備があります</div>
+      ) : (
+        ""
+      )}
+      <table className="table table-bordered">
+        <tbody>
+          <tr>
+            <th className="bg-dark text-white">単語</th>
+            <td>
+              <input type="text" defaultValue={word} ref={wordRef} />
+            </td>
+          </tr>
+          <tr>
+            <th className="bg-dark text-white">意味</th>
+            <td>
+              <textarea cols={80} defaultValue={meaning} ref={meaningRef} />
+            </td>
+          </tr>
+          <tr>
+            <th className="bg-dark text-white">種類</th>
+            <td>
+              <VocabTypeSelector typeId={typeId} setTypeId={setTypeId} />
+            </td>
+          </tr>
+          <tr>
+            <th className="bg-dark text-white">登録日時</th>
+            <td>{registeredAt}</td>
+          </tr>
+          <tr>
+            <th className="bg-dark text-white">更新日時</th>
+            <td>{updatedAt}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="my-3">
+        <button
+          className="btn btn-secondary me-2"
+          onClick={() => setIsEditMode(false)}
+        >
+          キャンセル
+        </button>
+        <button className="btn btn-warning me-2" onClick={handleUpdate}>
+          変更を確定
+        </button>
+        <button className="btn btn-danger" onClick={handleDelete}>
+          削除
+        </button>
+      </div>
+    </div>
+  );
 }
